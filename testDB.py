@@ -66,6 +66,10 @@ class DBManager:
         self.cursor.execute("UPDATE people SET WALLET = WALLET - " + str(price) + " WHERE PHONE = " + str(phone) + " AND password = " + str(password))
         self.conn.commit()
 
+    def getUserInfo(self, phone, password):
+        res = self.cursor.execute("SELECT FIRSTNAME, LASTNAME, WALLET, PHONE FROM people WHERE PHONE = " + str(phone) + " AND PASSWORD = " + str(password))
+        return res.fetchall()
+
 if __name__ == "__main__":
     test = DBManager('mydatabase.db')
     #test.creatTable()
@@ -73,5 +77,5 @@ if __name__ == "__main__":
     busData = [(None, 4, 1, 'Л123ШВ123', 21.)]
     #test.pullData('bus', busData)
     test.payment("79132931468", "1234", 18)
-    a = test.getDataPeopleWallet('79994318576', '1111')
-    print(len(a))
+    a = test.getUserInfo('79994318576', '1111')
+    print(a)

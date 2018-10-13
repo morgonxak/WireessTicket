@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="bus" uuid="8d16368c-b9fc-441a-b106-fafd82679763">
-      <driver-ref>sqlite.xerial</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\Users\admin\PycharmProjects\WireessTicket\app\db\bus</jdbc-url>
-      <driver-properties>
-        <property name="enable_load_extension" value="true" />
-      </driver-properties>
-    </data-source>
     <data-source source="LOCAL" name="mydatabase.db" uuid="f35281a6-3068-4656-95fb-a5f3d905b663">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
