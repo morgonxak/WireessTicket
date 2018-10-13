@@ -2,6 +2,7 @@ from app import app
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from werkzeug.utils import secure_filename
 import json
+jsonInfoBus = []
 
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
@@ -26,7 +27,7 @@ def upload_file():
         try:
             infoUser['magor'] = request.form['magor']
             infoUser['minor'] = request.form['minor']
-            if str(infoUser['major']) != "" and str(infoUser['minor']) != "":
+            if str(infoUser['magor']) != "" and str(infoUser['minor']) != "":
                 b = True
             else:
                 raise BaseException
@@ -52,7 +53,8 @@ def upload_file():
             res = app.config['db'].getDataBus(infoUser['minor'], infoUser['magor'])
             info = app.config['db'].getUserInfo(infoUser['phone'], infoUser['password'])
             #[('Дмитрий', 'Шумелев', 977.0, 79994318576)]
-            jsonData = {'firstname': info[0][0], 'lastname': info[0][1], 'wallet': info[0][2], 'phone': info[0][3], 'price': res[0][1]}
+            #jsonData = {'firstname': info[0][0], 'lastname': info[0][1], 'wallet': info[0][2], 'phone': info[0][3], 'price': res[0][1]}
+            jsonData = {'price': res[0][1]}
         else:
             pass
             #jsonData = {'Error': 'authentication'}
@@ -64,6 +66,11 @@ def upload_file():
                 if wallet - float(infoUser['transaction']) >= 0:
                     app.config['db'].payment(infoUser['phone'], infoUser['password'], infoUser['transaction'])
                     jsonData = {'transaction': True, 'wallet': wallet - float(infoUser['transaction'])}
+
+                    namePhoto = app.config['db'].getUserInfoPhoto(infoUser['phone'], infoUser['password'])
+                    temp = {'phone': infoUser['phone'], 'photo': namePhoto[0][0], 'transaction': infoUser['transaction']}
+                    jsonInfoBus.append(temp)
+
                 else:
                     jsonData = {'transaction': False, 'wallet': wallet}
 
@@ -73,8 +80,7 @@ def upload_file():
             mimetype='application/json'
         )
         return response
-
-    return render_template("main.html")
+    return render_template("main.html", jsonData=jsonInfoBus)
 
 def authentication(phone, password):
 
@@ -82,3 +88,7 @@ def authentication(phone, password):
         return True
     else:
         return False
+
+@app.route('/debug', methods=['GET', 'POST'])
+def debugPage():
+    return render_template("teee.html")

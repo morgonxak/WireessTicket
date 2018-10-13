@@ -1,15 +1,13 @@
 <!doctype html>
 <title>Загрузка изображений</title>
-<h1>Загрузка изображений</h1>
+<meta http-equiv="Refresh" content="5" />
 
-<form action="" method=post enctype=multipart/form-data>
-    <p>
+{% for post in jsonData %}
+    <h1>Оплата прошла</h1>
+    <p>Телефон:{{post.phone}}</p>
+    <p>Оплата: {{post.transaction}} руб </p>
+    <p><img src="{{post.photo}}" alt="Нет Фото"></p>
+    <br>
+{% endfor %}
 
-        <p><input placeholder="Телефон" name=phone></p>
-        <p><input placeholder="пароль" name=password></p>
-        <p><input placeholder="Magor" name=magor></p>
-        <p><input placeholder="minor" name=minor></p>
-        <p><input placeholder="transaction" name="transaction"></p>
-
-        <p><input type=submit value=Загрузить></p>
 </form>

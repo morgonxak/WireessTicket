@@ -70,11 +70,15 @@ class DBManager:
         res = self.cursor.execute("SELECT FIRSTNAME, LASTNAME, WALLET, PHONE FROM people WHERE PHONE = " + str(phone) + " AND PASSWORD = " + str(password))
         return res.fetchall()
 
+    def getUserInfoPhoto(self, phone, password):
+        res = self.cursor.execute("SELECT photo FROM people WHERE PHONE = " + str(phone) + " AND PASSWORD = " + str(password))
+        return res.fetchall()
+
 if __name__ == "__main__":
     test = DBManager('mydatabase.db')
     #test.creatTable()
     print(test.getDataBus(1, 2))
-    busData = [(None, 4, 1, 'Л123ШВ123', 21.)]
+    #busData = [(None, 4, 1, 'Л123ШВ123', 21.)]
     #test.pullData('bus', busData)
     test.payment("79132931468", "1234", 18)
     a = test.getUserInfo('79994318576', '1111')
